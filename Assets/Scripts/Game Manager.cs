@@ -47,16 +47,16 @@ public class GameManager : MonoBehaviour
     private void CreateBasicPackDeck()
     {
         Card normalCard = new Card();
-        normalCard.SetUpCard(CardType.dude, DudeType.normal, 10, 10);
+        normalCard.SetUpCard(CardType.dude, DudeType.normal, 10, 10, this);
         for (int i = 0; i < 4; i++)
         {
             basicPack.Add(normalCard);
         }
         Card medicCard = new Card();
-        medicCard.SetUpCard(CardType.dude, DudeType.medic, 15, 8);
+        medicCard.SetUpCard(CardType.dude, DudeType.medic, 15, 8, this);
         basicPack.Add(medicCard);
         Card wizardCard = new Card();
-        wizardCard.SetUpCard(CardType.dude, DudeType.wizard, 8, 15);
+        wizardCard.SetUpCard(CardType.dude, DudeType.wizard, 8, 15, this);
         basicPack.Add(wizardCard);
     }
 

@@ -17,16 +17,17 @@ public class Card :  MonoBehaviour
         this.dudeType = baseCard.dudeType;
         this.hp = baseCard.hp;
         this.atk = baseCard.atk;
+        this.gameManager = baseCard.gameManager;
         //this.sprite = baseCard.GetDudeSprite();
     }
 
-    public void SetUpCard(CardType cardType, DudeType dudeType, int hp, int atk)
+    public void SetUpCard(CardType cardType, DudeType dudeType, int hp, int atk, GameManager gameManager)
     {
         this.cardType = cardType;
         this.dudeType = dudeType;
         this.hp = hp;
         this.atk = atk;
-        //this.sprite = baseCard.GetDudeSprite();
+        this.gameManager = gameManager;
     }
     
     public Sprite GetDudeSprite()
