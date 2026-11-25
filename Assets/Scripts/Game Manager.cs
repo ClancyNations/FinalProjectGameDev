@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using UnityEditor.Sprites;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 
 public enum DudeType
@@ -16,6 +18,13 @@ public enum CardType
     item,
     enemy
 }
+
+public enum PackType
+{
+    basic,
+    fantasy
+}
+
 public class GameManager : MonoBehaviour
 {
     
@@ -23,20 +32,25 @@ public class GameManager : MonoBehaviour
     public List<Card> playerCards = new List<Card>();
     public List<Card> enemyCards = new List<Card>();
     public List<Card> basicPack = new List<Card>();
+    public List<Card> fantasyPack = new List<Card>();
     public GameObject cardPrefab;
+    public GameObject packPrefab;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         CreateAllCardDeck();
         CreateBasicPackDeck();
-        OpenBasicPack();
+        //OpenBasicPack();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            SpawnPack(PackType.basic);
+        }
     }
 
     private void CreateAllCardDeck()
@@ -73,6 +87,21 @@ public class GameManager : MonoBehaviour
             Debug.Log(createdCard.GetComponent<Card>().hp);
         }
     }
-    
-    
+
+    public void SpawnPack(PackType packType)
+    {
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = 0;
+        
+        Collider2D hit = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(mousePos));
+        if (hit != null && hit.GetComponent<Pack>() != null)
+        {
+            hit.GetComponent<Pack>().Open();
+        }
+        
+        GameObject packGB =  Instantiate(packPrefab, Camera.main.ScreenToWorldPoint(mousePos), Quaternion.identity);
+        Pack pack = packGB.GetComponent<Pack>();
+        pack.gameManager = this;
+        pack.packType = packType;
+    }
 }
